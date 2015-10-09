@@ -3,7 +3,7 @@ var express        = require('express'),
 	server         = express(),
 	morgan         = require('morgan'),
 	MONGOURI       = /* process.env.MONGOLAB_URI || */ "mongodb://localhost:27017",
-	dbname         = /* set here as string */,
+	dbname         = 'wiki',
 	mongoose       = require('mongoose'),
 	Schema         = mongoose.Schema,
 	ejs            = require('ejs'),
@@ -12,12 +12,14 @@ var express        = require('express'),
 	bodyParser     = require('body-parser'),
 	methodOverride = require('method-override');
 
+//Set Views
 server.set('views', './views');
 server.set('view engine', 'ejs');
 
+//Set Usage
+server.use(expressLayouts);
 server.use(express.static('./public'));
 server.use(morgan('combined'));
-server.use(expressLayouts);
 server.use(session({
 	secret: "mischievousCat",
 	resave: false,
@@ -28,12 +30,13 @@ server.use(bodyParser.urlencoded({
 }));
 server.use(methodOverride('_method'));
 
-
+//Routes
 server.get('/test', function (req, res) {
-	res.write("App goes here!");
+	res.render('index');
 	res.end();
 });
 
+//Port & DB Connection
 mongoose.connect(MONGOURI + "/" + dbname);
 server.listen(PORT, function () {
 	console.log("Server is running on Port: ", PORT);

@@ -1,0 +1,39 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	color: #222;
+	background: #eee;
+	font-family: sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #eee;
+}
+
+a:hover {
+	color: lightblue;
+	text-decoration: none;
+}
+
+header {
+	color: #eee;
+	background: #005743;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+header h1 {
+	padding-left: 10px;
+}
+
+main {
+	position: relative;
+	top: 60px;
+	padding: 20px;
+}
