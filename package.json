@@ -1,0 +1,23 @@
+{
+  "name": "project-two",
+  "version": "1.0.0",
+  "description": "ToDo: Write it all!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garonbailey/project-two.git"
+  },
+  "author": "Garon Bailey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/garonbailey/project-two/issues"
+  },
+  "homepage": "https://github.com/garonbailey/project-two#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
