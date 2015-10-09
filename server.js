@@ -1,6 +1,7 @@
 var express        = require('express'),
 	PORT           = process.env.PORT || 5432,
 	server         = express(),
+	morgan         = require('morgan'),
 	MONGOURI       = /* process.env.MONGOLAB_URI || */ "mongodb://localhost:27017",
 	dbname         = /* set here as string */,
 	mongoose       = require('mongoose'),
@@ -15,6 +16,7 @@ server.set('views', './views');
 server.set('view engine', 'ejs');
 
 server.use(express.static('./public'));
+server.use(morgan('combined'));
 server.use(expressLayouts);
 server.use(session({
 	secret: "mischievousCat",
