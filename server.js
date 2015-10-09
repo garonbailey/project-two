@@ -6,6 +6,7 @@ var express        = require('express'),
 	mongoose       = require('mongoose'),
 	Schema         = mongoose.Schema,
 	ejs            = require('ejs'),
+	expressLayouts = require('express-ejs-layouts'),
 	session        = require('express-session'),
 	bodyParser     = require('body-parser'),
 	methodOverride = require('method-override');
@@ -14,6 +15,7 @@ server.set('views', './views');
 server.set('view engine', 'ejs');
 
 server.use(express.static('./public'));
+server.use(expressLayouts);
 server.use(session({
 	secret: "mischievousCat",
 	resave: false,
