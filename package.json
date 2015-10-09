@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/garonbailey/project-two#readme",
   "dependencies": {
+    "body-parser": "^1.14.1",
+    "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "express-session": "^1.11.3",
+    "method-override": "^2.3.5",
     "mongoose": "^4.1.10"
   }
 }
