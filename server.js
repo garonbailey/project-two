@@ -30,10 +30,39 @@ server.use(bodyParser.urlencoded({
 }));
 server.use(methodOverride('_method'));
 
+//Schemas
+var articleSchema = new Schema ({
+	title: { type: String, required: true, unique: true },
+	author: { type: Schema.Types.ObjectId, ref: 'User'},
+	body: { type: String, rquired: true },
+	date: { type: Date, default: Date.now }
+}, {collection: 'articles'});
+var Article = mongoose.model('Article', articleSchema);
+
+var userSchema = new Schema ({
+	name: { type: String, required: true },
+	email: { type: String, required: true, unique: true},
+	password: { type: String, required: true},
+	articlesAuthored: [{ type: Schema.Types.ObjectId, ref: 'Article'}],
+	articlesEdited: [{ type: Schema.Types.ObjectId, ref: 'Article'}]
+}, {collection: 'users'});
+var User = mongoose.model('User', userSchema);
+
 //Routes
 server.get('/test', function (req, res) {
 	res.render('index');
 	res.end();
+});
+
+server.get('/user/new', function (req, res) {
+	res.render('user/new');
+});
+
+server.post('/user/new', function (req, res) {
+	var userInfo = req.body.user;
+
+	var newUser = new User(userInfo);
+	console.log(newUser);
 });
 
 //Port & DB Connection
