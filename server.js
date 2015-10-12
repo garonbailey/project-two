@@ -19,7 +19,7 @@ server.set('view engine', 'ejs');
 //Set Usage
 server.use(expressLayouts);
 server.use(express.static('./public'));
-server.use(morgan('combined'));
+server.use(morgan('dev'));
 server.use(session({
 	secret: "mischievousCat",
 	resave: false,
