@@ -33,7 +33,7 @@ server.use(methodOverride('_method'));
 //Schemas
 var articleSchema = new Schema ({
 	title: { type: String, required: true, unique: true },
-	author: { type: Schema.Types.ObjectId, ref: 'User'},
+	author: { type: String, required: true },
 	editor: { type: Schema.Types.ObjectId, ref: 'User'},
 	body: { type: String, rquired: true },
 	tags: [String],
@@ -62,6 +62,7 @@ server.post('/session', function (req, res) {
 			res.redirect(302, '/user/login');			
 		} else {
 			req.session.currentUser = sessionUser;
+			console.log(req.session.currentUser);
 			res.redirect(302, '/articles/');
 		}
 	});
@@ -151,8 +152,14 @@ server.get('/articles/:id', requireCurrentUser, function (req, res) {
 server.post('/articles/new', requireCurrentUser, function (req, res) {
 	var post = req.body.article;
 
-	var newPost = new Article(post);
-	newPost.author = req.session.currentUser._id;
+	var newPost = new Article({
+		title: post.title,
+		author: req.session.currentUser.firstName + " " + req.session.currentUser.lastName,
+		body: post.body,
+		tags: post.tags
+	});
+
+	console.log(newPost);
 	newPost.save(function (err, articleSuccess) {
 		if (err) {
 			console.log(err);
