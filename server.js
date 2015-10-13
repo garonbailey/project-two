@@ -20,7 +20,7 @@ server.set('view engine', 'ejs');
 server.use(session({
 	secret: "mischievousCat",
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: true
 }));
 server.use(expressLayouts);
 server.use(express.static('./public'));
@@ -51,12 +51,36 @@ var userSchema = new Schema ({
 var User = mongoose.model('User', userSchema);
 
 //Routes
+server.post('/session', function (req, res) {
+	var userLogin = req.body.session.email;
+	req.session.currentUser;
+	User.findOne({ email: userLogin }, function (err, sessionUser) {
+		if (err) {
+			console.log(err);
+			res.redirect(302, '/user/login');
+		} else if (req.body.session.password !== sessionUser.password) {
+			res.redirect(302, '/user/login');			
+		} else {
+			req.session.currentUser = sessionUser;
+			res.redirect(302, '/articles/');
+		}
+	});
+});
+
+var requireCurrentUser = function (req, res, next) {
+	if (req.session.currentUser) {
+		next();
+	} else {
+		res.redirect(302, '/user/login');
+	}
+};
+
 server.get('/', function (req, res) {
 	res.render('index');
 	res.end();
 });
 
-server.get('/user/', function (req, res) {
+server.get('/user/', requireCurrentUser, function (req, res) {
 	User.find({}, function (err, allUsers) {
 		if (err) {
 			console.log(err);
@@ -67,11 +91,15 @@ server.get('/user/', function (req, res) {
 	});
 });
 
+server.get('/user/login', function (req, res) {
+	res.render('user/login');
+})
+
 server.get('/user/new', function (req, res) {
 	res.render('user/new');
 });
 
-server.get('/user/:id', function (req, res) {
+server.get('/user/:id', requireCurrentUser, function (req, res) {
 
 	User.findOne({_id: req.params.id}, function (err, thisUser) {
 		if (err) {
@@ -96,14 +124,35 @@ server.post('/user/new', function (req, res) {
 	});
 });
 
-server.get('/articles/new', function (req, res) {
+server.get('/articles/', requireCurrentUser, function (req, res) {
+	Article.find({}, function (err, allArticles) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render('articles/index', { allArticles });
+		}
+	});
+})
+
+server.get('/articles/new', requireCurrentUser, function (req, res) {
 	res.render('articles/new');
 });
 
-server.post('/articles/new', function (req, res) {
+server.get('/articles/:id', requireCurrentUser, function (req, res) {
+	Article.findOne({_id: req.params.id}, function (err, thisArticle) {
+		if (err) {
+			redirect(302, '/articles/');
+		} else {
+			res.render('articles/current', { thisArticle });
+		}
+	});
+});
+
+server.post('/articles/new', requireCurrentUser, function (req, res) {
 	var post = req.body.article;
 
 	var newPost = new Article(post);
+	newPost.author = req.session.currentUser._id;
 	console.log(newPost);
 })
 
