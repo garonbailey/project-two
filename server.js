@@ -33,9 +33,11 @@ server.use(methodOverride('_method'));
 //Schemas
 var articleSchema = new Schema ({
 	title: { type: String, required: true, unique: true },
-	author: { type: String, required: true },
-	editor: { type: Schema.Types.ObjectId, ref: 'User'},
-	body: { type: String, rquired: true },
+	author: { name: { type: String, required: true },
+			  _id: { type: String, required: true }
+	},
+	editor: String,
+	body: { type: String, required: true },
 	tags: [String],
 	date: { type: Date, default: Date.now }
 }, {collection: 'articles'});
@@ -152,23 +154,21 @@ server.get('/articles/:id', requireCurrentUser, function (req, res) {
 server.post('/articles/new', requireCurrentUser, function (req, res) {
 	var post = req.body.article;
 
-	var newPost = new Article({
-		title: post.title,
-		author: req.session.currentUser.firstName + " " + req.session.currentUser.lastName,
-		body: post.body,
-		tags: post.tags
-	});
+	var newPost = new Article(post);
+	newPost.author = {
+		_id: req.session.currentUser._id,
+		name: req.session.currentUser.firstName + " " + req.session.currentUser.lastName
+	};
 
-	console.log(newPost);
 	newPost.save(function (err, articleSuccess) {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log(articleSuccess);
-			res.redirect('/articles/');
+			res.redirect(302, '/articles/');
 		}
-	})
-})
+	});
+});
 
 //Port & DB Connection
 mongoose.connect(MONGOURI + "/" + dbname);

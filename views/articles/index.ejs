@@ -2,5 +2,5 @@
 <a href="/articles/new">Create a new article</a>
 
 <% allArticles.forEach (function (article) { %>
-	<h3><a href="/articles/<%= article._id %>"><%= article.title %> by <%= article.author %></a></h3>
+	<h3><a href="/articles/<%= article._id %>"><%= article.title %></a> by <%= article.author.name %></h3>
 <% }) %>

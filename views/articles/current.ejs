@@ -1,5 +1,5 @@
 <h2><%= thisArticle.title %></h2>
-<h4>by <%= thisArticle.author %></h4>
+<h4>by <a href="/user/<%= thisArticle.author._id %>"><%= thisArticle.author.name %></a>, <%= thisArticle.date.toDateString() %></h4>
 <p><%= thisArticle.body %></h3>
 <ul>
 	<% for (var i = 0; i < thisArticle.tags.length; i++) { %>
