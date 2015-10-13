@@ -153,7 +153,14 @@ server.post('/articles/new', requireCurrentUser, function (req, res) {
 
 	var newPost = new Article(post);
 	newPost.author = req.session.currentUser._id;
-	console.log(newPost);
+	newPost.save(function (err, articleSuccess) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(articleSuccess);
+			res.redirect('/articles/');
+		}
+	})
 })
 
 //Port & DB Connection
