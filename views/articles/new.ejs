@@ -1,0 +1,26 @@
+<h2>Create a new article below!</h2>
+
+<form method="post" action="/articles/new">
+	<div class="form-group">
+        <label for="title">Title</label>
+        <input class="form-control" type="text" name="article[title]" placeholder="Title" id="title"/>
+      </div>
+      <div class="form-group">
+        <label for="body">Body</label>
+        <textarea class="form-control" rows="5" name="article[body]" placeholder="Article Body" id="body"/></textarea>
+      </div>
+      <div class="form-group">
+      <label>Tags</label><br/>
+        <input type="checkbox" id="inlineCheckbox1" name="article[tags][]" value="HR">
+        <label class="checkbox-inline" for="inlineCheckbox1">HR
+        </label>
+        <input type="checkbox" id="inlineCheckbox2" name="article[tags][]" value="New Hires">
+        <label class="checkbox-inline" for="inlineCheckbox2">New Hires
+        </label>
+        <input type="checkbox" id="inlineCheckbox3" name="article[tags][]" value="Payroll">
+        <label class="checkbox-inline" for="inlineCheckbox3">Payroll
+        </label>
+      </div>
+     <br/>
+ 	<input type="submit" value="Publish">
+</form>

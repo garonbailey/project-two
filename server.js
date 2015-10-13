@@ -17,14 +17,14 @@ server.set('views', './views');
 server.set('view engine', 'ejs');
 
 //Set Usage
-server.use(expressLayouts);
-server.use(express.static('./public'));
-server.use(morgan('dev'));
 server.use(session({
 	secret: "mischievousCat",
 	resave: false,
 	saveUninitialized: false
 }));
+server.use(expressLayouts);
+server.use(express.static('./public'));
+server.use(morgan('dev'));
 server.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -34,36 +34,78 @@ server.use(methodOverride('_method'));
 var articleSchema = new Schema ({
 	title: { type: String, required: true, unique: true },
 	author: { type: Schema.Types.ObjectId, ref: 'User'},
+	editor: { type: Schema.Types.ObjectId, ref: 'User'},
 	body: { type: String, rquired: true },
+	tags: [String],
 	date: { type: Date, default: Date.now }
 }, {collection: 'articles'});
 var Article = mongoose.model('Article', articleSchema);
 
 var userSchema = new Schema ({
-	name: { type: String, required: true },
+	firstName: { type: String, required: true },
+	lastName: { type: String, required: true },
+	jobTitle: { type: String, required: true },
 	email: { type: String, required: true, unique: true},
-	password: { type: String, required: true},
-	articlesAuthored: [{ type: Schema.Types.ObjectId, ref: 'Article'}],
-	articlesEdited: [{ type: Schema.Types.ObjectId, ref: 'Article'}]
+	password: { type: String, required: true}
 }, {collection: 'users'});
 var User = mongoose.model('User', userSchema);
 
 //Routes
-server.get('/test', function (req, res) {
+server.get('/', function (req, res) {
 	res.render('index');
 	res.end();
+});
+
+server.get('/user/', function (req, res) {
+	User.find({}, function (err, allUsers) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(allUsers);
+			res.render('user/index', { users: allUsers });
+		}
+	});
 });
 
 server.get('/user/new', function (req, res) {
 	res.render('user/new');
 });
 
+server.get('/user/:id', function (req, res) {
+
+	User.findOne({_id: req.params.id}, function (err, thisUser) {
+		if (err) {
+			res.redirect(302, '/user/');
+		} else {
+			res.render('user/current', { thisUser });
+		}
+	});
+});
+
 server.post('/user/new', function (req, res) {
 	var userInfo = req.body.user;
 
 	var newUser = new User(userInfo);
-	console.log(newUser);
+	newUser.save(function (err, userSuccess) {
+		if (err) {
+			res.redirect(302, '/user/new');
+		} else {
+			console.log(newUser);
+			res.redirect(302, '/user/');
+		}
+	});
 });
+
+server.get('/articles/new', function (req, res) {
+	res.render('articles/new');
+});
+
+server.post('/articles/new', function (req, res) {
+	var post = req.body.article;
+
+	var newPost = new Article(post);
+	console.log(newPost);
+})
 
 //Port & DB Connection
 mongoose.connect(MONGOURI + "/" + dbname);

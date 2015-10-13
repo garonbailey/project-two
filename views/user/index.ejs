@@ -1,0 +1,7 @@
+<% users.forEach( function (thisUser) { %>
+	<h2><a href="/user/<%= thisUser._id %>"><%= thisUser.firstName %></a></h2>
+	<ul>
+		<li><%= thisUser.jobTitle %></li>
+		<li><%= thisUser.email %></li>
+	</ul>
+<% }) %>

@@ -2,11 +2,19 @@
 
 <form method="post" action="/user/new">
 	<div class="form-group">
-        <label for="name">Name</label>
-        <input class="form-control" type="text" name="user[name]" placeholder="Name" id="name"/>
+        <label for="firstName">First Name</label>
+        <input class="form-control" type="text" name="user[firstName]" placeholder="First Name" id="firstName"/>
       </div>
       <div class="form-group">
-        <label for="lastname">Email</label>
+        <label for="lastName">Last Name</label>
+        <input class="form-control" type="text" name="user[lastName]" placeholder="Last Name" id="lastName"/>
+      </div>
+      <div class="form-group">
+        <label for="title">Job Title</label>
+        <input class="form-control" type="text" name="user[jobTitle]" placeholder="Name" id="title"/>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
         <input class="form-control" type="text" name="user[email]" placeholder="Email" id="email"/>
       </div>
       <div class="form-group">
@@ -15,8 +23,8 @@
       </div>
       <div class="form-group">
         <label for="passwordconfirm">Confirm Password</label>
-        <input class="form-control" type="password" name="user[password]" placeholder="Confirm Password" id="passwordconfirm"/>
+        <input class="form-control" type="password" name="user[passwordConfirm]" placeholder="Confirm Password" id="passwordconfirm"/>
       </div>
      <br/>
-    <input type="submit" value="Sign Up">
+ 	<input type="submit" value="Sign Up">
 </form>

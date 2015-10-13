@@ -15,7 +15,7 @@ a {
 	color: #eee;
 }
 
-a:hover {
+a:hover, main a:hover {
 	color: lightblue;
 	text-decoration: none;
 }
@@ -32,8 +32,33 @@ header h1 {
 	padding-left: 10px;
 }
 
+header > div {
+	display: inline-block;
+}
+
+.links {
+	margin: 15px;
+	padding: 10px;
+	float: right;
+	text-align: right;
+}
+
+.links ul {
+	list-style: none;
+}
+
+.links li {
+	display: inline;
+	margin-left: 10px;
+	vertical-align: bottom;
+}
+
 main {
 	position: relative;
 	top: 60px;
 	padding: 20px;
+}
+
+main a {
+	color: #222;
 }
