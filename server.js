@@ -144,7 +144,7 @@ server.get('/articles/new', requireCurrentUser, function (req, res) {
 server.get('/articles/:id', requireCurrentUser, function (req, res) {
 	Article.findOne({_id: req.params.id}, function (err, thisArticle) {
 		if (err) {
-			redirect(302, '/articles/');
+			res.redirect(302, '/articles/');
 		} else {
 			res.render('articles/current', { thisArticle });
 		}
@@ -166,6 +166,16 @@ server.post('/articles/new', requireCurrentUser, function (req, res) {
 		} else {
 			console.log(articleSuccess);
 			res.redirect(302, '/articles/');
+		}
+	});
+});
+
+server.patch('/articles/:id', requireCurrentUser, function (req, res) {
+	Article.findOne({_id: req.params.id}, function (err, articleToEdit) {
+		if (err) {
+			res.redirect(302, '/articles/');
+		} else {
+			res.render('articles/edit', { theArticle: articleToEdit });
 		}
 	});
 });

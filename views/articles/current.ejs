@@ -6,3 +6,7 @@
 		<li><%= thisArticle.tags[i] %></li>
 	<% } %>
 </ul>
+
+<form method="post" action="/articles/<%= thisArticle._id %>?_method=PATCH">
+	<input type="submit" value="Edit">
+</form>
