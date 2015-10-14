@@ -32,27 +32,6 @@ header h1 {
 	padding-left: 10px;
 }
 
-header > div {
-	display: inline-block;
-}
-
-.links {
-	margin: 15px;
-	padding: 10px;
-	float: right;
-	text-align: right;
-}
-
-.links ul {
-	list-style: none;
-}
-
-.links li {
-	display: inline;
-	margin-left: 10px;
-	vertical-align: bottom;
-}
-
 main {
 	position: relative;
 	top: 60px;
@@ -61,4 +40,32 @@ main {
 
 main a {
 	color: #222;
+}
+
+main > div {
+	display: inline-block;
+}
+
+.links {
+	width: 8%;
+	margin-top: 5px;
+	margin-left: 5px;
+	padding: 5px;
+	float: left;
+	text-align: left;
+}
+
+.links ul {
+	list-style: none;
+}
+
+.content {
+	width: 88%;
+	float: right;
+	vertical-align: top;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-left-color: #666666;
+	margin-left: 5px;
+	padding: 5px;
 }
