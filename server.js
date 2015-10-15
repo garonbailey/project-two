@@ -2,7 +2,7 @@ var express        = require('express'),
 	PORT           = process.env.PORT || 5432,
 	server         = express(),
 	morgan         = require('morgan'),
-	MONGOURI       = /* process.env.MONGOLAB_URI || */ "mongodb://localhost:27017",
+	MONGOURI       = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
 	dbname         = 'wiki',
 	mongoose       = require('mongoose'),
 	Schema         = mongoose.Schema,
@@ -59,6 +59,7 @@ var userSchema = new Schema ({
 var User = mongoose.model('User', userSchema);
 
 //Routes
+
 server.post('/session', function (req, res) {
 	var userLogin = req.body.session.email;
 	req.session.currentUser;
@@ -74,6 +75,7 @@ server.post('/session', function (req, res) {
 			res.redirect(302, '/articles/');
 		}
 	});
+	req.locals.currentUser = req.session.currentUser;
 });
 
 var requireCurrentUser = function (req, res, next) {
@@ -83,6 +85,12 @@ var requireCurrentUser = function (req, res, next) {
 		res.redirect(302, '/user/login');
 	}
 };
+
+server.delete('/session', function (req, res) {
+	req.session.currentUser;
+	req.locals.currentUser;
+	res.redirect(302, '/');
+});
 
 server.get('/', function (req, res) {
 	res.render('index');
@@ -94,7 +102,6 @@ server.get('/user/', requireCurrentUser, function (req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(allUsers);
 			res.render('user/index', { users: allUsers });
 		}
 	});
@@ -115,14 +122,6 @@ server.get('/user/:id', requireCurrentUser, function (req, res) {
 			res.redirect(302, '/user/');
 		} else {
 			res.render('user/current', { thisUser });
-			// Article.find({author: {_id: theUser}}, function (articleErr, usersArticles) {
-			// 	if (articleErr) {
-			// 		console.log(articleErr);
-			// 	} else {
-			// 		res.render('user/current', { thisUser: thisUser,
-			// 									 userArticles: usersArticles });
-			// 	}
-			// });
 		}
 	});
 });
@@ -136,7 +135,6 @@ server.post('/user/new', function (req, res) {
 		if (err) {
 			res.redirect(302, '/user/new');
 		} else {
-			console.log(newUser);
 			res.redirect(302, '/user/');
 		}
 	});
@@ -203,7 +201,6 @@ server.post('/articles/new', requireCurrentUser, function (req, res) {
 						if (err) {
 							console.log(err);
 						} else {
-							console.log(articleSuccess);
 							res.redirect(302, '/articles/');
 						}
 					});
@@ -241,7 +238,6 @@ server.patch('/articles/:id', requireCurrentUser, function (req, res) {
 				if (editSaveErr) {
 					console.log(editSaveErr);
 				} else {
-					console.log(articleFound);
 					articleFound.update(req.body.article, function (updateErr, updatedArticle) {
 						if (updateErr) {
 							console.log(updateErr);

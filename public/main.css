@@ -22,14 +22,45 @@ a:hover, main a:hover {
 
 header {
 	color: #eee;
-	background: #005743;
+	background: #E1633B;
 	position: absolute;
 	top: 0;
 	width: 100%;
+	border-bottom-color: #111;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
 }
 
 header h1 {
 	padding-left: 10px;
+}
+
+header a:hover {
+	color: #111;
+}
+
+header > * {
+	display: inline-block;
+}
+
+header.logo {
+	text-align: left;
+}
+
+header.user {
+	text-align: right;
+}
+
+button {
+	min-width: 60px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+button:hover {
+	background-color: #E1633B;
 }
 
 main {
@@ -44,6 +75,10 @@ main a {
 
 main > div {
 	display: inline-block;
+}
+
+main:last-child {
+	margin-bottom: 10px;
 }
 
 .links {
@@ -61,17 +96,17 @@ main > div {
 	width: 100%;
 }
 
-.links button {
+.links a {
 	width: 100%;
 	display: block;
-	background-color: orange;
 	padding: 3px;
-	margin-bottom: 3px;
+	margin-bottom: 5px;
 	border-radius: 10%;
 }
 
-.links button:hover {
-	background-color: steelblue;
+.links a:hover {
+	background-color: #E1633B;
+	color: floralwhite;
 }
 
 .content {
@@ -84,4 +119,42 @@ main > div {
 	border-left-color: #666666;
 	margin-left: 5px;
 	padding: 5px;
+}
+
+.heading a:hover {
+	color: #E1633B;
+}
+
+.heading button:hover {
+	background-color: floralwhite;
+}
+
+.container {
+	width: 95%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	background-color: floralwhite;
+}
+
+.container ul {
+	padding-left: 15px;
+}
+
+.heading {
+	width: 100%;
+	padding: 3px;
+	background-color: #988A7F;
+}
+
+.heading > * {
+	display: inline-block;
+}
+
+.heading a {
+	padding: 3px;
+}
+
+.heading a:hover {
+	background: floralwhite;
+	border-radius: 10%;
 }

@@ -1,4 +1,6 @@
-<h2>Article Edit</h2>
+<div class="heading">
+  <h2>Article Edit</h2>
+</div>
 
 <form method="post" action="/articles/<%= theArticle._id %>?_method=PATCH">
 	<div class="form-group">
@@ -40,5 +42,5 @@
         </label>
       </div>
      <br/>
- 	<input type="submit" value="Publish Update">
+ 	<button type="submit" class="btn btn-default">Publish Update</button>
 </form>

@@ -1,8 +1,10 @@
-<h1><%= thisUser.firstName %> <%= thisUser.lastName %></h1>
-	<h2><%= thisUser.jobTitle %></h2>
-	<h3><%= thisUser.email %></h3>
+<div class="heading">
+	<h1><%= thisUser.firstName %> <%= thisUser.lastName %></h1>
+	<p><%= thisUser.jobTitle %></p>
+</div>
+<p>Email: <%= thisUser.email %></p>
 
-<h2>Articles Authored</h2>
+<h2><i>Articles Authored</i></h2>
 	<ul>
 	<% thisUser.articlesWritten.forEach (function (article) { %>
 		<li>
