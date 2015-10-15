@@ -48,19 +48,35 @@ main > div {
 
 .links {
 	width: 8%;
+	height: 100%;
 	margin-top: 5px;
-	margin-left: 5px;
+	margin-left: 2px;
 	padding: 5px;
 	float: left;
-	text-align: left;
+	text-align: center;
 }
 
 .links ul {
 	list-style: none;
+	width: 100%;
+}
+
+.links button {
+	width: 100%;
+	display: block;
+	background-color: orange;
+	padding: 3px;
+	margin-bottom: 3px;
+	border-radius: 10%;
+}
+
+.links button:hover {
+	background-color: steelblue;
 }
 
 .content {
 	width: 88%;
+	height: 100%;
 	float: right;
 	vertical-align: top;
 	border-left-style: solid;

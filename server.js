@@ -50,6 +50,9 @@ var userSchema = new Schema ({
 	firstName: { type: String, required: true },
 	lastName: { type: String, required: true },
 	jobTitle: { type: String, required: true },
+	articlesWritten: [{ title: String,
+						post_id: String
+	}],
 	email: { type: String, required: true, unique: true},
 	password: { type: String, required: true}
 }, {collection: 'users'});
@@ -106,12 +109,20 @@ server.get('/user/new', function (req, res) {
 });
 
 server.get('/user/:id', requireCurrentUser, function (req, res) {
-
-	User.findOne({_id: req.params.id}, function (err, thisUser) {
+	var theUser = req.params.id;
+	User.findOne({_id: theUser}, function (err, thisUser) {
 		if (err) {
 			res.redirect(302, '/user/');
 		} else {
 			res.render('user/current', { thisUser });
+			// Article.find({author: {_id: theUser}}, function (articleErr, usersArticles) {
+			// 	if (articleErr) {
+			// 		console.log(articleErr);
+			// 	} else {
+			// 		res.render('user/current', { thisUser: thisUser,
+			// 									 userArticles: usersArticles });
+			// 	}
+			// });
 		}
 	});
 });
@@ -120,6 +131,7 @@ server.post('/user/new', function (req, res) {
 	var userInfo = req.body.user;
 
 	var newUser = new User(userInfo);
+	newUser.articlesWritten = [];
 	newUser.save(function (err, userSuccess) {
 		if (err) {
 			res.redirect(302, '/user/new');
@@ -163,10 +175,12 @@ server.get('/articles/:id', requireCurrentUser, function (req, res) {
 server.post('/articles/new', requireCurrentUser, function (req, res) {
 	var post = req.body.article;
 
+	var presentUser = req.session.currentUser;
+
 	var newPost = new Article(post);
 	newPost.author = {
-		_id: req.session.currentUser._id,
-		name: req.session.currentUser.firstName + " " + req.session.currentUser.lastName
+		_id: presentUser._id,
+		name: presentUser.firstName + " " + req.session.currentUser.lastName
 	};
 	newPost.edits = [];
 
@@ -174,8 +188,27 @@ server.post('/articles/new', requireCurrentUser, function (req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(articleSuccess);
-			res.redirect(302, '/articles/');
+			User.findOne({_id: presentUser._id}, function (findUserErr, aUser) {
+				if (findUserErr) {
+					console.log(findUserErr);
+				} else {
+					var postObject = {
+						title: "",
+						post_id: "",
+					}
+					postObject.title = newPost.title;
+					postObject.post_id = newPost._id;
+					aUser.articlesWritten.push(postObject);
+					aUser.save(function (err) {
+						if (err) {
+							console.log(err);
+						} else {
+							console.log(articleSuccess);
+							res.redirect(302, '/articles/');
+						}
+					});
+				}
+			});
 		}
 	});
 });
