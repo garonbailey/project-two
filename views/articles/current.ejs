@@ -6,7 +6,9 @@
 <% } %>
 <ul>Tags:
 	<% for (var i = 0; i < thisArticle.tags.length; i++) { %>
-		<li><%= thisArticle.tags[i] %></li>
+		<li>
+			<a href="/articles?tag=<%= thisArticle.tags[i] %>"><%= thisArticle.tags[i] %></a>
+		</li>
 	<% } %>
 </ul>
 

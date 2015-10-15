@@ -131,7 +131,13 @@ server.post('/user/new', function (req, res) {
 });
 
 server.get('/articles/', requireCurrentUser, function (req, res) {
-	Article.find({}, function (err, allArticles) {
+	if (req.query.tag) {
+		var query = { tags: req.query.tag};
+	} else {
+		var query = {};
+	}
+
+	Article.find(query, function (err, allArticles) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -195,9 +201,9 @@ server.patch('/articles/:id', requireCurrentUser, function (req, res) {
 		if (err) {
 			console.log(err);
 		} else {
-			articleFound.edits.editor_id = req.session.currentUser.id;
-			articleFound.edits.editor = ourUser.firstName + " " + ourUser.lastName;
-						
+			articleFound.edits.push({ editor_id: req.session.currentUser.id,
+								  	  editor: ourUser.firstName + " " + ourUser.lastName
+									});
 			articleFound.save(function (editSaveErr) {
 				if (editSaveErr) {
 					console.log(editSaveErr);
