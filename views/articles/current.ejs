@@ -1,12 +1,13 @@
 <h2><%= thisArticle.title %></h2>
 <h4>by <a href="/user/<%= thisArticle.author._id %>"><%= thisArticle.author.name %></a>, <%= thisArticle.date.toDateString() %></h4>
 <p><%= thisArticle.body %></h3>
-<ul>
+<% if (thisArticle.edit) { %>
+	<p>Most Recent Edit: <%= thisArticle.edit.editor %>, <%= thisArticle.edit.editDate.toString() %>
+<% } %>
+<ul>Tags:
 	<% for (var i = 0; i < thisArticle.tags.length; i++) { %>
 		<li><%= thisArticle.tags[i] %></li>
 	<% } %>
 </ul>
 
-<form method="post" action="/articles/<%= thisArticle._id %>?_method=PATCH">
-	<input type="submit" value="Edit">
-</form>
+<a href="/articles/edit/<%= thisArticle._id %>">Edit Me!</a>

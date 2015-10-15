@@ -36,7 +36,10 @@ var articleSchema = new Schema ({
 	author: { name: { type: String, required: true },
 			  _id: { type: String, required: true }
 	},
-	editor: String,
+	edits: [{ editor_id: String,
+			  editorName: String,
+			  editDate: { type: Date, default: Date.now }
+			}],
 	body: { type: String, required: true },
 	tags: [String],
 	date: { type: Date, default: Date.now }
@@ -159,6 +162,7 @@ server.post('/articles/new', requireCurrentUser, function (req, res) {
 		_id: req.session.currentUser._id,
 		name: req.session.currentUser.firstName + " " + req.session.currentUser.lastName
 	};
+	newPost.edits = [];
 
 	newPost.save(function (err, articleSuccess) {
 		if (err) {
@@ -170,12 +174,44 @@ server.post('/articles/new', requireCurrentUser, function (req, res) {
 	});
 });
 
-server.patch('/articles/:id', requireCurrentUser, function (req, res) {
+server.get('/articles/edit/:id/', requireCurrentUser, function (req, res) {
 	Article.findOne({_id: req.params.id}, function (err, articleToEdit) {
 		if (err) {
 			res.redirect(302, '/articles/');
 		} else {
 			res.render('articles/edit', { theArticle: articleToEdit });
+		}
+	});
+});
+
+server.patch('/articles/:id', requireCurrentUser, function (req, res) {
+	var articleQuery = req.params.id;
+	var ourUser = req.session.currentUser;
+	var editorInfo = { editor_id: req.session.currentUser.id,
+					   editor: req.session.currentUser.firstName + " " + req.session.currentUser.lastName,
+				       editDate: Date.now };
+	console.log(ourUser._id);
+	Article.findOne({_id: articleQuery}, function (err, articleFound) {
+		if (err) {
+			console.log(err);
+		} else {
+			articleFound.edits.editor_id = req.session.currentUser.id;
+			articleFound.edits.editor = ourUser.firstName + " " + ourUser.lastName;
+						
+			articleFound.save(function (editSaveErr) {
+				if (editSaveErr) {
+					console.log(editSaveErr);
+				} else {
+					console.log(articleFound);
+					articleFound.update(req.body.article, function (updateErr, updatedArticle) {
+						if (updateErr) {
+							console.log(updateErr);
+						} else {
+							res.redirect(302, '/articles/' + articleFound._id);
+						}
+					});
+				}
+			});
 		}
 	});
 });
