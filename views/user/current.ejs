@@ -1,13 +1,16 @@
 <div class="heading">
 	<h1><%= thisUser.firstName %> <%= thisUser.lastName %></h1>
 	<p><%= thisUser.jobTitle %></p>
-</div>
-<p>Email: <%= thisUser.email %></p>
 
-<h2><i>Articles Authored</i></h2>
-	<ul>
-	<% thisUser.articlesWritten.forEach (function (article) { %>
-		<li>
-			<a href="/articles/<%= article.post_id %>"><%= article.title %></a>
-		</li>
-<% }) %>
+	<div class="article-body">
+		<p>Email: <%= thisUser.email %></p>
+
+		<h2><i>Articles Authored</i></h2>
+			<ul>
+			<% thisUser.articlesWritten.forEach (function (article) { %>
+				<li>
+					<a href="/articles/<%= article.post_id %>"><%= article.title %></a>
+				</li>
+		<% }) %>
+	</div>
+</div>

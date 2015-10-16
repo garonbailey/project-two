@@ -1,46 +1,48 @@
 <div class="heading">
   <h2>Article Edit</h2>
-</div>
 
-<form method="post" action="/articles/<%= theArticle._id %>?_method=PATCH">
-	<div class="form-group">
-        <label for="title">Title</label>
-        <input class="form-control" type="text" name="article[title]" placeholder="Title" value="<%= theArticle.title %>" id="title"/>
-      </div>
-      <div class="form-group">
-        <label for="body">Body</label>
-        <textarea class="form-control" rows="5" name="article[body]" placeholder="Article Body" id="body"/><%= theArticle.body %></textarea>
-      </div>
-      <div class="form-group">
-      <label>Tags</label><br/>
-        <input type="checkbox" id="inlineCheckbox1" name="article[tags][]" value="HR" 
-        <% for (var i = 0; i < theArticle.tags.length; i++) { %>
-          <% if (theArticle.tags[i] === "HR") { %>
-            checked = "checked";
-          <% } %>
-        <% } %>
-        >
-        <label class="checkbox-inline" for="inlineCheckbox1">HR
-        </label>
-        <input type="checkbox" id="inlineCheckbox2" name="article[tags][]" value="New Hires"
-        <% for (var i = 0; i < theArticle.tags.length; i++) { %>
-          <% if (theArticle.tags[i] === "New Hires") { %>
-            checked = "checked";
-          <% } %>
-        <% } %>
-        >
-        <label class="checkbox-inline" for="inlineCheckbox2">New Hires
-        </label>
-        <input type="checkbox" id="inlineCheckbox3" name="article[tags][]" value="Payroll" 
-        <% for (var i = 0; i < theArticle.tags.length; i++) { %>
-          <% if (theArticle.tags[i] === "Payroll") { %>
-            checked= "checked";
-          <% } %>
-        <% } %>
-        >
-        <label class="checkbox-inline" for="inlineCheckbox3">Payroll
-        </label>
-      </div>
-     <br/>
- 	<button type="submit" class="btn btn-default">Publish Update</button>
-</form>
+  <div class="article-body">
+    <form method="post" action="/articles/<%= theArticle._id %>?_method=PATCH">
+    	<div class="form-group">
+            <label for="title">Title</label>
+            <input class="form-control" type="text" name="article[title]" placeholder="Title" value="<%= theArticle.title %>" id="title"/>
+          </div>
+          <div class="form-group">
+            <label for="body">Body</label>
+            <textarea class="form-control" rows="5" name="article[body]" placeholder="Article Body" id="body"/><%= theArticle.body %></textarea>
+          </div>
+          <div class="form-group">
+          <label>Tags</label><br/>
+            <input type="checkbox" id="inlineCheckbox1" name="article[tags][]" value="HR" 
+            <% for (var i = 0; i < theArticle.tags.length; i++) { %>
+              <% if (theArticle.tags[i] === "HR") { %>
+                checked = "checked";
+              <% } %>
+            <% } %>
+            >
+            <label class="checkbox-inline" for="inlineCheckbox1">HR
+            </label>
+            <input type="checkbox" id="inlineCheckbox2" name="article[tags][]" value="New Hires"
+            <% for (var i = 0; i < theArticle.tags.length; i++) { %>
+              <% if (theArticle.tags[i] === "New Hires") { %>
+                checked = "checked";
+              <% } %>
+            <% } %>
+            >
+            <label class="checkbox-inline" for="inlineCheckbox2">New Hires
+            </label>
+            <input type="checkbox" id="inlineCheckbox3" name="article[tags][]" value="Payroll" 
+            <% for (var i = 0; i < theArticle.tags.length; i++) { %>
+              <% if (theArticle.tags[i] === "Payroll") { %>
+                checked= "checked";
+              <% } %>
+            <% } %>
+            >
+            <label class="checkbox-inline" for="inlineCheckbox3">Payroll
+            </label>
+          </div>
+         <br/>
+     	<button type="submit" class="btn btn-default">Publish Update</button>
+    </form>
+  </div>
+</div>

@@ -75,7 +75,6 @@ server.post('/session', function (req, res) {
 			res.redirect(302, '/articles/');
 		}
 	});
-	req.locals.currentUser = req.session.currentUser;
 });
 
 var requireCurrentUser = function (req, res, next) {
@@ -86,11 +85,11 @@ var requireCurrentUser = function (req, res, next) {
 	}
 };
 
-server.delete('/session', function (req, res) {
-	req.session.currentUser;
-	req.locals.currentUser;
-	res.redirect(302, '/');
-});
+// server.delete('/session', function (req, res) {
+// 	req.session.currentUser;
+// 	req.locals.currentUser;
+// 	res.redirect(302, '/');
+// });
 
 server.get('/', function (req, res) {
 	res.render('index');

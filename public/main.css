@@ -133,7 +133,7 @@ main:last-child {
 	width: 95%;
 	margin-left: 2.5%;
 	margin-right: 2.5%;
-	background-color: floralwhite;
+	background-color: #988A7F;
 }
 
 .container ul {
@@ -157,4 +157,9 @@ main:last-child {
 .heading a:hover {
 	background: floralwhite;
 	border-radius: 10%;
+}
+
+.article-body {
+	width: 100%;
+	background: floralwhite;
 }

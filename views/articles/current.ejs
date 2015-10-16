@@ -2,17 +2,15 @@
 	<h2><%= thisArticle.title %></h2>
 	<h4>by <a href="/user/<%= thisArticle.author._id %>"><%= thisArticle.author.name %></a>, <%= thisArticle.date.toDateString() %></h4>
 	<a href="/articles/edit/<%= thisArticle._id %>"><button>Edit Me!</button></a>
-</div>
 
-<p><%= thisArticle.body %></h3>
-<% if (thisArticle.edit) { %>
-	<p>Most Recent Edit: <%= thisArticle.edit.editor %>, <%= thisArticle.edit.editDate.toString() %>
-<% } %>
-<hr/>
-<div class="tags">
-	<p>Tags:
-		<% for (var i = 0; i < thisArticle.tags.length; i++) { %>
-			<a href="/articles?tag=<%= thisArticle.tags[i] %>"><button><%= thisArticle.tags[i] %></button></a>
-		<% } %>
-	</p>
+	<div class="article-body"><%= thisArticle.body %></div>
+	<% if (thisArticle.edit) { %>
+		<p>Most Recent Edit: <%= thisArticle.edit.editor %>, <%= thisArticle.edit.editDate.toString() %>
+	<% } %>
+	<hr/>
+		<p>Tags:
+			<% for (var i = 0; i < thisArticle.tags.length; i++) { %>
+				<a href="/articles?tag=<%= thisArticle.tags[i] %>"><button><%= thisArticle.tags[i] %></button></a>
+			<% } %>
+		</p>
 </div>
