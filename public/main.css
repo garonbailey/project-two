@@ -134,6 +134,7 @@ main:last-child {
 	margin-left: 2.5%;
 	margin-right: 2.5%;
 	background-color: #988A7F;
+	border-radius: 5%;
 }
 
 .container ul {
